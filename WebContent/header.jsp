@@ -1,17 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
-	import="it.unisa.etm.model.bean.*,java.util.*"%>
-<%
-	Amministratore admin = (Amministratore) session.getAttribute("admin");
-	Utente utente = (Utente) session.getAttribute("utente");
-	if(utente==null && admin == null){
-		response.sendRedirect("./index.jsp");
-	    return;
-	}
-	ArrayList<Partecipa> partecipazioni = (ArrayList<Partecipa>) session.getAttribute("listaPartecipazione");
-	if(partecipazioni == null)
-		partecipazioni = new ArrayList<>();
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +21,7 @@
 	integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
 	crossorigin="anonymous">
 
-<title>ETM Platform</title>
+<title>header</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet">
 
@@ -60,98 +50,19 @@
 		</button>
 		<a class="navbar-brand" href="#"><img alt="load"
 			src="img/logo.png" width="60" height="60"></a> <span
-			style="color: orange;">ETM Platform</span>
+			style="color: orange;"><a class="nav-link text-dark"
+					href="index.jsp" id="home">HOME <span class="sr-only"></span>
+				</a></span>
 
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 
 
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-				<li class="nav-item"><a class="nav-link text-dark"
-					href="homePage.jsp" id="home">Home <span class="sr-only"></span>
-				</a></li>
-				<%if(utente!=null){ %>
-				<li class="nav-item"><a class="nav-link text-dark"
-					href="ListaProposteTesiAttiveServlet" id="areaTesi">Area
-						proposta tesi</a></li>
-				<%if (utente.getTipo().equals("s")&&(utente.getPropostaTesi_Id()>0)) { %>
-				<li class="nav-item"><a class="nav-link text-dark"
-					href="VisualizzaListaConsegneServlet" id="areaCondivisa">Area
-						privata condivisa</a></li>
-				<%
-				}
-				%>
-
-				<%
-					if (utente.getTipo().equals("d")&&(partecipazioni.size()>0)) { 
- 					%>
-				<li class="nav-item"><a class="nav-link text-dark"
-					href="VisualizzaListaPartecipazioneServlet" id="areaCondivisa">Area
-						privata condivisa</a></li>
-				<%} %>
-
-
-				<li class="nav-item d-lg-none d-xl-none"><a
-					class="nav-link text-dark"
-					href="VisualizzaProfiloUtenteServlet?utente_email=<%=utente.getEmail()%>"
-					id="profilo">Profilo</a></li>
-				<%}else if(admin!=null){ %>
-
-				<li><a class="nav-link text-dark" href="ListaUtentiServlet"
-					id="admin">Area Admin</a></li>
-
-
-
-				<%} %>
-
-				<li class="nav-item d-lg-none"><a class="nav-link text-dark"
-					href="LogoutServlet">Logout</a></li>
-
-
+				
 			</ul>
-			<%if(admin==null){ %>
-			<form class="form-inline my-2 my-lg-0"
-				action="CercaListaUtentiServlet" method="post" name="cercaProfilo">
-				<div class="container">
-					<input class="form-control mr-sm-2 border-dark" type="text"
-						name="cerca" placeholder="Cerca" aria-label="Cerca"> <select
-						class="form-control mr-sm-2 border-dark" name="option">
-						<option value="nome">Nome</option>
-						<option value="cognome">Cognome</option>
-					</select>
-					<button type="submit"
-						class="btn btn-inline my-2 my-sm-0 bg-warning "
-						id="exampleButton1">
-						<span class="fa fa-search"></span>
-					</button>
-				</div>
-			</form>
-			<%} %>
-			<%if(utente!=null) {%>
-			<form action="VisualizzaProfiloUtenteServlet" method="post"
-				class="d-none d-lg-block d-xl-block">
-				<input type="hidden" name="utente_email"
-					value="<%=utente.getEmail()%>">
-				<button class="btn btn-inline mr-3 bg-warning" type="submit">
-					<span class="fa fa-user-circle"></span>
-				</button>
-			</form>
-			<%} %>
-			<ul class="navbar-nav d-none d-lg-block d-xl-block">
-
-				<li class="nav-item">
-					<form action="LogoutServlet" method="post">
-						<button class="btn btn-inline my-2 my-sm-0 bg-warning"
-							type="submit">
-							<span class="fas fa-sign-out-alt form-control-feedback"></span>
-						</button>
-					</form>
-				</li>
-			</ul>
-			<%if(utente!=null) {%>
-			<i class="my-2 ml-3" style="color: orange;">Benvenuto, <%=utente.getNome() %></i>
-			<%}else if(admin!=null){ %>
-			<i class="my-2 ml-3" style="color: orange;">Benvenuto, <%=admin.getNome() %></i>
-			<%} %>
+			
+			
+			
 		</div>
 	</nav>
 
