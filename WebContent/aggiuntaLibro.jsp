@@ -11,7 +11,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="css/stile.css">
-<title>Modifica libro</title>
+<title>Aggiunta libro</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto"
 	rel="stylesheet">
 </head>
@@ -47,7 +47,7 @@
 					<div class="card-body " style="min-height: 80vh;">
 						<div class="form-inline mb-3 pb-3"
 							style="border-bottom: 1px solid">
-							<h5 class="card-title mb-1">Modifica di un libro&nbsp;</h5>
+							<h5 class="card-title mb-1">Aggiunta di un libro&nbsp;</h5>
 						</div>
 						<form
 							action="ConfermaModificaPropostaTesiServlet?proposta_id="
@@ -124,7 +124,7 @@
 							</div>
 
 							<button type="button" class="btn btn-primary mx-3 my-3"
-								name="invio" onclick="validazione()">Modifica</button>
+								name="invio" onclick="validazione()">Aggiungi</button>
 						</form>
 					</div>
 				</div>
