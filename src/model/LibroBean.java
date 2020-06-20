@@ -5,9 +5,9 @@ public class LibroBean {
   private Object bookID;
   private String titolo;
   private String autore;
-  private float valutazione_media;
-  private int isbn;
-  private int isbn13; 
+  private double valutazione_media;
+  private String isbn;
+  private String isbn13; 
   private String lingua;
   private int numero_pagine ;
   private int numero_valutazioni;
@@ -16,7 +16,7 @@ public class LibroBean {
   private String casa_editrice;
   
   
-  public LibroBean(Object bookID, String titolo, String autore, float valutazione_media, int isbn, int isbn13,
+  public LibroBean(Object bookID, String titolo, String autore, double valutazione_media, String isbn, String isbn13,
       String lingua, int numero_pagine, int numero_valutazioni, int numero_revisioni, String data_publicazione,
       String casa_editrice) {
     super();
@@ -53,22 +53,22 @@ public class LibroBean {
   public void setAutore(String autore) {
     this.autore = autore;
   }
-  public float getValutazione_media() {
+  public double getValutazione_media() {
     return valutazione_media;
   }
-  public void setValutazione_media(float valutazione_media) {
+  public void setValutazione_media(double valutazione_media) {
     this.valutazione_media = valutazione_media;
   }
-  public int getIsbn() {
+  public String getIsbn() {
     return isbn;
   }
-  public void setIsbn(int isbn) {
+  public void setIsbn(String isbn) {
     this.isbn = isbn;
   }
-  public int getIsbn13() {
+  public String getIsbn13() {
     return isbn13;
   }
-  public void setIsbn13(int isbn13) {
+  public void setIsbn13(String isbn13) {
     this.isbn13 = isbn13;
   }
   public String getLingua() {

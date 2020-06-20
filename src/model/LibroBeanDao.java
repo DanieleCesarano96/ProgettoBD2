@@ -56,11 +56,11 @@ public class LibroBeanDao {
      while(it.hasNext())
      {
        Document document = it.next();
-       LibroBean libro= new LibroBean(document.get("bookID"),(String)document.get("title"),(String)document.get("authors"),
-           (float)document.get("average_rating"),(int)document.get("isbn"),(int)document.get("isbn13"),
-           (String)document.get("language_code"),(int)document.get("num_pages"),(int)document.get("ratings_count"),
-           (int)document.get("text_reviews_count"),(String)document.get("publication_date"),
-           (String)document.get("publisher;;;"));
+
+       LibroBean libro= new LibroBean(document.get("_id"),document.getString("title"),document.getString("authors"),
+           document.getDouble("average_rating"),document.getString("isbn"),document.getString("isbn13"),
+           document.getString("language_code"),document.getInteger("num_pages"),document.getInteger("ratings_count"),
+           document.getInteger("text_reviews_count"),document.getString("publication_date"),document.getString("publisher;;;"));
        libri.add(libro);
      }
      return libri;
