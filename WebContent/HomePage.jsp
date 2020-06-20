@@ -37,6 +37,7 @@
 						ArrayList<LibroBean> libri= (ArrayList<LibroBean>) request.getAttribute("libri");
 						for(LibroBean libro : libri)
 						{
+						
 					%>
 						<table class="table table-striped">
 							<tr class="pt-1" id="lista">

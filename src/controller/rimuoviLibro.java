@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.LibroBean;
 import model.LibroBeanDao;
 
-@WebServlet("/modificaLibro")
+@WebServlet("/rimuoviLibro")
 public class rimuoviLibro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -22,14 +22,14 @@ public class rimuoviLibro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-	  Object bookID = request.getAttribute("bookID");
+	  Object bookID = request.getParameter("bookID");
 	  
 	  LibroBeanDao libriDao = new LibroBeanDao();
 	  libriDao.eliminaLibro(bookID);
 	  
-	  ArrayList<LibroBean> libri= libriDao.getAllBooks();    
-      request.setAttribute("libri",libri);
-      request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+	  System.out.println(bookID);
+	 
+      request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
