@@ -12,24 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 import model.LibroBean;
 import model.LibroBeanDao;
 
-@WebServlet("/rimuoviLibro")
-public class rimuoviLibro extends HttpServlet {
+@WebServlet("/ricercaAvanzata")
+public class ricercaAvanzata extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public rimuoviLibro() {
+    public ricercaAvanzata() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	  String bookID = request.getParameter("bookID");
-	  
-	  LibroBeanDao libriDao = new LibroBeanDao();
-	  libriDao.eliminaLibro(bookID);
-	  
-	  System.out.println(bookID);
 	 
-      request.getRequestDispatcher("index.jsp").forward(request, response);
+	  String titolo= request.getParameter("titolo");
+	  String autore= request.getParameter("autore");
+	  String isbn= request.getParameter("isbn");
+	  String lingua= request.getParameter("lingua");
+	  String casa_editrice= request.getParameter("casaeditrice");
+      
+      LibroBeanDao libroDao= new LibroBeanDao();
+      ArrayList<LibroBean> libri =libroDao.ricercaAvanzata(titolo,autore,isbn,lingua,casa_editrice);
+    
+      request.setAttribute("libri",libri);
+      request.getRequestDispatcher("HomePage.jsp").forward(request, response);  
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

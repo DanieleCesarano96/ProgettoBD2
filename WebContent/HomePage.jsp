@@ -3,12 +3,12 @@
 	import="java.util.*"
 	import="model.*"
 	%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HomePage</title>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -23,10 +23,8 @@
 					<form class="form-inline mb-3 pb-3"
 						style="border-bottom: 1px solid">
 						<h5 class="card-title mb-1">Lista libri&nbsp;</h5>
-						<input class="form-control form-control-sm ml-5 w-50" id="myInput"
-							type="text" placeholder="Cerca libro"
-							aria-label="Cerca libro"> <a
-							href="AggiungiPropostaTesiServlet"
+						<a
+							href="aggiuntaLibro.jsp"
 							class="btn btn-inline my-2 my-sm-0 mx-2 bg-warning "
 							id="AddLibro" data-toggle="tooltip" data-placement="bottom"
 							title="Aggiungi nuovo libro"><i
@@ -52,7 +50,7 @@
 								</td>
 								<td style="border-style: none">
 									 <a class="btn bg-warning"
-									href="modificaLibro?bookID=<%=libro.getBookID()%>"><small
+									href="ricercaLibro?bookID=<%=libro.getBookID()%>"><small
 										style="display: inline" class="d-none d-md-block">Modifica&nbsp;</small><i
 										class="fas fa-edit" style="display: inline"></i></a> 
 								</td>
@@ -71,34 +69,29 @@
 						<tr class="border" style="word-wrap: break-word;">
 							<td
 								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
-								<form>
+								<form action="ricercaAvanzata" method="post">
 									<div  class="text-xs-center mb-1">Titolo
-										<input id="titolo" 
+										<input name="titolo" 
 										 	type="text" placeholder="Titolo"
 											aria-label="Titolo">
 									</div>
 									<div  class="text-xs-center mb-1">Autore
-										<input  id="autore" 
+										<input  name="autore" 
 										 	type="text" placeholder="Autore"
 											aria-label="Autore">
 									</div>
 									<div  class="text-xs-center mb-1">isbn
-										<input  id="isbn" 
+										<input  name="isbn" 
 										 	type="text" placeholder="isbn"
 											aria-label="isbn">
 									</div>
 									<div  class="text-xs-center mb-1">Lingua
-										<input  id="lingua" 
+										<input  name="lingua" 
 										 	type="text" placeholder="Lingua"
 											aria-label="Lingua">
 									</div>
-									<div  class="text-xs-center mb-1">Anno publicazione
-										<input  id="annopublicazione" 
-										 	type="text" placeholder="Anno publicazione"
-											aria-label="Anno publicazione">
-									</div>
 									<div  class="text-xs-center mb-1">Casa Editrice
-										<input  id="casaeditrice" 
+										<input  name="casaeditrice" 
 										 	type="text" placeholder="Casa Editrice"
 											aria-label="Casa Editrice">
 									</div>

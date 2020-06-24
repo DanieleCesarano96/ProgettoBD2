@@ -34,6 +34,23 @@ public class LibroBean {
     this.casa_editrice = casa_editrice;
   }
   
+  public LibroBean( String titolo, String autore, double valutazione_media, String isbn, String isbn13,
+      String lingua, int numero_pagine, int numero_valutazioni, int numero_revisioni, String data_publicazione,
+      String casa_editrice) {
+    super();
+    this.titolo = titolo;
+    this.autore = autore;
+    this.valutazione_media = valutazione_media;
+    this.isbn = isbn;
+    this.isbn13 = isbn13;
+    this.lingua = lingua;
+    this.numero_pagine = numero_pagine;
+    this.numero_valutazioni = numero_valutazioni;
+    this.numero_revisioni = numero_revisioni;
+    this.data_publicazione = data_publicazione;
+    this.casa_editrice = casa_editrice;
+  }
+  
   
   public Object getBookID() {
     return bookID;

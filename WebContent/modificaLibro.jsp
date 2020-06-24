@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import="java.util.*"
+	import="model.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,9 @@
 	
 	<div
 		style="background-image: linear-gradient(to bottom right, #FF8C00, #FFC04C); min-height: 80vh;">
-		
+		<% 
+				LibroBean libro= (LibroBean) request.getAttribute("libro");	
+		%>
 
 		<main role="main" class="container">
 		<div class="row">
@@ -50,81 +54,79 @@
 							<h5 class="card-title mb-1">Modifica di un libro&nbsp;</h5>
 						</div>
 						<form
-							action="ConfermaModificaPropostaTesiServlet?proposta_id="
-							method="post" id="aggiungi" name="aggiungilibro">
+							action="modificaLibro?bookID=<%=libro.getBookID()%>" method="post">
 							<h6>Inserisci i dati nei campi sottostanti</h6>
 
 							<div class="form-group">
 								<label for="inputTitolo">Titolo</label> <input type="text"
 									class="form-control" name="titolo" placeholder="Titolo"
-									onchange="controlloTitolo()" value=""
+									onchange="controlloTitolo()" value="<%=libro.getTitolo() %>"
 									required>
 							</div>
 
 							<div class="form-group">
 								<label for="inputAutore">Autore</label> <input type="text"
 									class="form-control" name="autore" placeholder="Autore"
-									onchange="controlloAutore()" value=""
+									onchange="controlloAutore()" value="<%=libro.getAutore() %>"
 									required>
 							</div>
 
 							<div class="form-group">
-								<label for="inputValutazioneMedia">Valutazione media</label> <input type="number" 
+								<label for="inputValutazioneMedia">Valutazione media</label> <input  
 								class="form-control" name="valutazioneMedia" placeholder="Valutazione Media"
 									onchange="controlloValutazioneMedia()"
-									value=""> 
+									value="<%=libro.getValutazione_media() %>"> 
 							</div>
 
 							<div class="form-group">
 								<label for="inputIsbn">Isbn</label>
 								<input class="form-control" type="number"  placeholder="Isbn" name="isbn" 
-								onchange="controlloIsbn()" value="">
+								onchange="controlloIsbn()" value="<%=libro.getIsbn() %>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputIsbn13">Isbn13</label>
 								<input class="form-control" type="number"  placeholder="Isbn13" name="isbn13" 
-								onchange="controlloIsbn13()" value="">
+								onchange="controlloIsbn13()" value="<%=libro.getIsbn13() %>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputLingua">Lingua</label>
 								<input class="form-control" type="text"  placeholder="Lingua" name="lingua" 
-								onchange="controlloLingua()" value="">
+								onchange="controlloLingua()" value="<%=libro.getLingua() %>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroPagine">Numero pagine</label>
 								<input class="form-control" type="number"
-								placeholder="Numero pagine" name="numeropagine" value="">
+								placeholder="Numero pagine" name="numeropagine" value="<%=libro.getNumero_pagine() %>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroValutazioni">Numero valutazioni</label>
 								<input class="form-control" type="number"
-								placeholder="Numero valutazioni" name="numerovalutazioni" value="">
+								placeholder="Numero valutazioni" name="numerovalutazioni" value="<%=libro.getNumero_valutazioni() %>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroRevisioni">Numero revisioni</label>
 								<input class="form-control" type="number"
-								placeholder="Numero revisioni" name="numerorevisioni" value="">
+								placeholder="Numero revisioni" name="numerorevisioni" value="<%=libro.getNumero_revisioni() %>">
 							</div>
 						
 							<div class="form-group">
 								<label for="inputDatapublicazione">Data publicazione</label>
 								<input class="form-control" type="text"
-								placeholder="Data publicazione" name="dataPublicazione" value="">
+								placeholder="Data publicazione" name="dataPublicazione" value="<%=libro.getData_publicazione()%>">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputCasaeditrice">Casa editrice</label>
 								<input class="form-control" type="text"
-								placeholder="Casa editrice" name="casaEditrice" value="">
+								placeholder="Casa editrice" name="casaEditrice" value="<%=libro.getCasa_editrice()%>">
 							</div>
 
-							<button type="button" class="btn btn-primary mx-3 my-3"
-								name="invio" onclick="validazione()">Modifica</button>
+							<button type="submit" class="btn btn-primary mx-3 my-3" >Modifica</button>
 						</form>
 					</div>
 				</div>

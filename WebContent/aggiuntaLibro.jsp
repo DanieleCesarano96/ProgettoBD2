@@ -50,7 +50,7 @@
 							<h5 class="card-title mb-1">Aggiunta di un libro&nbsp;</h5>
 						</div>
 						<form
-							action="ConfermaModificaPropostaTesiServlet?proposta_id="
+							action="aggiuntaLibro"
 							method="post" id="aggiungi" name="aggiungilibro">
 							<h6>Inserisci i dati nei campi sottostanti</h6>
 
@@ -64,12 +64,11 @@
 							<div class="form-group">
 								<label for="inputAutore">Autore</label> <input type="text"
 									class="form-control" name="autore" placeholder="Autore"
-									onchange="controlloAutore()" value=""
-									required>
+									onchange="controlloAutore()" value="">
 							</div>
 
 							<div class="form-group">
-								<label for="inputValutazioneMedia">Valutazione media</label> <input type="number" 
+								<label for="inputValutazioneMedia">Valutazione media</label> <input 
 								class="form-control" name="valutazioneMedia" placeholder="Valutazione Media"
 									onchange="controlloValutazioneMedia()"
 									value=""> 
@@ -77,13 +76,13 @@
 
 							<div class="form-group">
 								<label for="inputIsbn">Isbn</label>
-								<input class="form-control" type="number"  placeholder="Isbn" name="isbn" 
+								<input class="form-control" type="text" placeholder="Isbn" name="isbn" 
 								onchange="controlloIsbn()" value="">
 							</div>
 							
 							<div class="form-group">
 								<label for="inputIsbn13">Isbn13</label>
-								<input class="form-control" type="number"  placeholder="Isbn13" name="isbn13" 
+								<input class="form-control"  type="text" placeholder="Isbn13" name="isbn13" 
 								onchange="controlloIsbn13()" value="">
 							</div>
 							
@@ -123,8 +122,7 @@
 								placeholder="Casa editrice" name="casaEditrice" value="">
 							</div>
 
-							<button type="button" class="btn btn-primary mx-3 my-3"
-								name="invio" onclick="validazione()">Aggiungi</button>
+							<button type="submit" class="btn btn-primary mx-3 my-3" >Aggiungi</button>
 						</form>
 					</div>
 				</div>
