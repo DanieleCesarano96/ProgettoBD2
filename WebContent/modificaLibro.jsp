@@ -54,7 +54,7 @@
 							<h5 class="card-title mb-1">Modifica di un libro&nbsp;</h5>
 						</div>
 						<form
-							action="modificaLibro?bookID=<%=libro.getBookID()%>" method="post">
+							action="modificaLibro?bookID=<%=(String)libro.getBookID()%>" method="post">
 							<h6>Inserisci i dati nei campi sottostanti</h6>
 
 							<div class="form-group">

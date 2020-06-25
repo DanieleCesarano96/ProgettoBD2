@@ -64,7 +64,7 @@ public class aggiuntaLibro extends HttpServlet {
         num_rev= Integer.parseInt(request.getParameter("numerorevisioni"));
       }
       
-	  LibroBean libro = new LibroBean(request.getParameter("titolo"),
+	  LibroBean libro = new LibroBean("",request.getParameter("titolo"),
           request.getParameter("autore"),valutazione_media,request.getParameter("isbn"),request.getParameter("isbn13"),
           request.getParameter("lingua"),num_pag,num_val,num_rev,request.getParameter("dataPublicazione"),
           request.getParameter("casaEditrice")); 

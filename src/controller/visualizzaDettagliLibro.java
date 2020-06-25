@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.LibroBean;
 import model.LibroBeanDao;
 
-@WebServlet("/ricercaLibro")
-public class ricercaLibro extends HttpServlet {
+@WebServlet("/visualizzaDettagliLibro")
+public class visualizzaDettagliLibro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ricercaLibro() {
+    public visualizzaDettagliLibro() {
         super();
     }
 
@@ -25,7 +25,7 @@ public class ricercaLibro extends HttpServlet {
 	  LibroBean libro = libriDao.getLibro(bookID);
 	  
 	  request.setAttribute("libro",libro);
-	  request.getRequestDispatcher("modificaLibro.jsp").forward(request, response);  
+	  request.getRequestDispatcher("visualizzaDettagliLibro.jsp").forward(request, response);  
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import="java.util.*"
+	import="model.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,6 +24,11 @@
 		style="background-image: linear-gradient(to bottom right, #FF8C00, #FFC04C); min-height: 80vh;">
 		<main role="main" class="container">
 
+		<% 
+				LibroBean libro= (LibroBean) request.getAttribute("libro");	
+				System.out.println(libro.getTitolo());
+		%>
+		
 		<div class="row">
 			<div class="col-md-8 my-4">
 				<div class="card mb-3">
@@ -56,7 +63,7 @@
 													<label>Titolo: </label>
 												</div>
 												<div class="col-md-6">
-													<p>Harry Potter and the Chamber of Secrets (Harry Potter  #2)</p>
+													<p><%=libro.getTitolo()%></p>
 												</div>
 											</div>
 
@@ -65,7 +72,7 @@
 													<label>Autore:</label>
 												</div>
 												<div class="col-md-6">
-													<p>J.K. Rowling</p>
+													<p><%=libro.getAutore() %></p>
 												</div>
 											</div>
 
@@ -74,7 +81,7 @@
 													<label>Valutazione media:</label>
 												</div>
 												<div class="col-md-6">
-													<p>4.42</p>
+													<p><%=libro.getValutazione_media() %></p>
 												</div>
 											</div>
 
@@ -83,7 +90,7 @@
 													<label>Isbn:</label>
 												</div>
 												<div class="col-md-6">
-													<p>439554896</p>
+													<p><%=libro.getIsbn() %></p>
 												</div>
 											</div>
 											
@@ -92,7 +99,7 @@
 													<label>Isbn13:</label>
 												</div>
 												<div class="col-md-6">
-													<p>9780439554893</p>
+													<p><%=libro.getIsbn13() %></p>
 												</div>
 											</div>
 											
@@ -101,7 +108,7 @@
 													<label>Lingua:</label>
 												</div>
 												<div class="col-md-6">
-													<p>eng</p>
+													<p><%=libro.getLingua() %></p>
 												</div>
 											</div>
 											
@@ -110,7 +117,7 @@
 													<label>Numero pagine:</label>
 												</div>
 												<div class="col-md-6">
-													<p>352</p>
+													<p><%=libro.getNumero_pagine() %></p>
 												</div>
 											</div>
 											
@@ -119,7 +126,7 @@
 													<label>Numero valutazioni:</label>
 												</div>
 												<div class="col-md-6">
-													<p>6333</p>
+													<p><%=libro.getNumero_valutazioni() %></p>
 												</div>
 											</div>
 	
@@ -128,7 +135,7 @@
 													<label>Numero revisioni:</label>
 												</div>
 												<div class="col-md-6">
-													<p>244</p>
+													<p><%=libro.getNumero_revisioni() %></p>
 												</div>
 											</div>
 	
@@ -137,7 +144,7 @@
 													<label>Data publicazione:</label>
 												</div>
 												<div class="col-md-6">
-													<p>11/1/2003</p>
+													<p><%=libro.getData_publicazione()%></p>
 												</div>
 											</div>
 	
@@ -146,7 +153,7 @@
 													<label>Casa editrice:</label>
 												</div>
 												<div class="col-md-6">
-													<p>Scholastic</p>
+													<p><%=libro.getCasa_editrice()%></p>
 												</div>
 											</div>
 

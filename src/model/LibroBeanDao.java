@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -21,6 +23,8 @@ public class LibroBeanDao {
      MongoCollection<Document> collection= database.getCollection("Books");  
     
      Document document= new Document("title",libro.getTitolo());
+     ObjectId id= new ObjectId();
+     document.append("_id",id.toString());
      
      //non inseriamo i campi se sono vuoti
      if(!libro.getAutore().equals(""))
@@ -65,7 +69,7 @@ public class LibroBeanDao {
      {
        document.append("text_reviews_count", libro.getNumero_revisioni());
      }
-     
+
      collection.insertOne(document);
  
      return true;
@@ -137,7 +141,7 @@ public class LibroBeanDao {
          num_rev=  document.getInteger("text_reviews_count");
        }
        
-       LibroBean libro= new LibroBean(document.get("_id"),document.getString("title"),document.getString("authors"),
+       LibroBean libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
            valutazione_media,document.getString("isbn"),document.getString("isbn13"),document.getString("language_code"),
            num_pag,num_val,num_rev,document.getString("publication_date"),document.getString("publisher;;;"));
        libri.add(libro);
@@ -167,7 +171,7 @@ public class LibroBeanDao {
      {
        Document document = it.next();
 
-        libro= new LibroBean(document.get("_id"),document.getString("title"),document.getString("authors"),
+        libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
            document.getDouble("average_rating"),document.getString("isbn"),document.getString("isbn13"),
            document.getString("language_code"),document.getInteger("num_pages"),document.getInteger("ratings_count"),
            document.getInteger("text_reviews_count"),document.getString("publication_date"),document.getString("publisher;;;"));
@@ -219,31 +223,6 @@ public class LibroBeanDao {
 
      collection.deleteOne(Filters.eq("_id",id));
      
-     return true;
-    } 
-    else
-    {
-      return false;
-    }
-  }
-  
-  
-  public synchronized boolean modificaLibro2( ) {
-    ConnectToDB mongo = new ConnectToDB();
-    
-    if(mongo.Connessione())
-    {
-     MongoDatabase database = mongo.getDatabase();
-     MongoCollection<Document> collection= database.getCollection("Books");
-
-     BasicDBObject newDocument = new BasicDBObject();
-     newDocument.put("title", "daddy"); 
-     newDocument.put("authors", "daddy3"); 
-     
-     BasicDBObject updateObject = new BasicDBObject();
-     updateObject.put("$set", newDocument);
-     
-     collection.updateOne(Filters.eq("title", "1"), updateObject);
      return true;
     } 
     else
@@ -336,7 +315,7 @@ public class LibroBeanDao {
          num_rev=  document.getInteger("text_reviews_count");
        }
        
-       LibroBean libro= new LibroBean(document.get("_id"),document.getString("title"),document.getString("authors"),
+       LibroBean libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
            valutazione_media,document.getString("isbn"),document.getString("isbn13"),document.getString("language_code"),
            num_pag,num_val,num_rev,document.getString("publication_date"),document.getString("publisher;;;"));
        libri.add(libro);

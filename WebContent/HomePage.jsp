@@ -40,17 +40,17 @@
 						<table class="table table-striped">
 							<tr class="pt-1" id="lista">
 								<td style="border-style: none"><a
-									href="VisualizzaDettagliTesiServlet?propostatesi_id="><%=libro.getTitolo() %></a>
+									href="visualizzaDettagliLibro?bookID=<%=(String)libro.getBookID()%>"><%=libro.getTitolo() %></a>
 								</td>
 								<td style="border-style: none">
 									 <a class="btn bg-warning"
-									href="rimuoviLibro?bookID=<%=libro.getBookID()%>"><small
+									href="rimuoviLibro?bookID=<%=(String)libro.getBookID()%>"><small
 										style="display: inline" class="d-none d-md-block">Rimuovi&nbsp;</small><i
 										class="fas fa-trash-alt" style="display: inline"></i></a> 
 								</td>
 								<td style="border-style: none">
 									 <a class="btn bg-warning"
-									href="ricercaLibro?bookID=<%=libro.getBookID()%>"><small
+									href="ricercaLibro?bookID=<%=(String)libro.getBookID()%>"><small
 										style="display: inline" class="d-none d-md-block">Modifica&nbsp;</small><i
 										class="fas fa-edit" style="display: inline"></i></a> 
 								</td>

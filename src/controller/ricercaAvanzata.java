@@ -29,11 +29,24 @@ public class ricercaAvanzata extends HttpServlet {
 	  String casa_editrice= request.getParameter("casaeditrice");
       
       LibroBeanDao libroDao= new LibroBeanDao();
-      ArrayList<LibroBean> libri =libroDao.ricercaAvanzata(titolo,autore,isbn,lingua,casa_editrice);
-    
-      request.setAttribute("libri",libri);
-      request.getRequestDispatcher("HomePage.jsp").forward(request, response);  
-	}
+      
+      
+      if((titolo==null || titolo.equals("")) && (autore==null || autore.equals("")) && (isbn==null || isbn.equals("")) 
+          && (lingua==null || lingua.equals("")) && (casa_editrice==null || casa_editrice.equals("")))
+      {
+        ArrayList<LibroBean> libri = libroDao.getAllBooks();
+        
+        request.setAttribute("libri",libri);
+        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+      }
+      else 
+      {
+        ArrayList<LibroBean> libri =libroDao.ricercaAvanzata(titolo,autore,isbn,lingua,casa_editrice);    
+        
+        request.setAttribute("libri",libri);
+        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+      }   
+    }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

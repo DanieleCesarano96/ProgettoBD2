@@ -2,7 +2,7 @@ package model;
 
 public class LibroBean {
 
-  private Object bookID;
+  private String bookID;
   private String titolo;
   private String autore;
   private double valutazione_media;
@@ -16,7 +16,7 @@ public class LibroBean {
   private String casa_editrice;
   
   
-  public LibroBean(Object bookID, String titolo, String autore, double valutazione_media, String isbn, String isbn13,
+  public LibroBean(String bookID, String titolo, String autore, double valutazione_media, String isbn, String isbn13,
       String lingua, int numero_pagine, int numero_valutazioni, int numero_revisioni, String data_publicazione,
       String casa_editrice) {
     super();
@@ -52,10 +52,10 @@ public class LibroBean {
   }
   
   
-  public Object getBookID() {
+  public String getBookID() {
     return bookID;
   }
-  public void setBookID(Object bookID) {
+  public void setBookID(String bookID) {
     this.bookID = bookID;
   }
   public String getTitolo() {

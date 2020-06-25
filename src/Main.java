@@ -1,12 +1,24 @@
+import java.util.ArrayList;
+
+import model.LibroBean;
 import model.LibroBeanDao;
 
 public class Main {
 
   public static void main(String[] args) {
-    LibroBeanDao libro =new LibroBeanDao();
+    LibroBeanDao libroda =new LibroBeanDao();
     
-    libro.getAllBooks();
-    System.out.println("finito");
+    ArrayList<LibroBean> libri= libroda.getAllBooks();
+    int count=0;
+    for(LibroBean libro : libri)
+    {
+      if(count==8121)
+      {
+        return;
+      }
+      libroda.eliminaLibro(libro.getBookID());
+      count++;
+    }
 
   }
 
