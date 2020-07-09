@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
+import com.mongodb.*;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -242,14 +242,14 @@ public class LibroBeanDao {
      MongoCollection<Document> collection= database.getCollection("Books");
 
      BasicDBObject newDocument = new BasicDBObject();
-
+     
      if(titolo!=null && !titolo.equals(""))
      {
-       newDocument.put("title", titolo); 
+       newDocument.put("title", new BasicDBObject("$regex",".*"+titolo+".*")); 
      }
      if(autore!=null && !autore.equals(""))
      {
-       newDocument.put("authors", autore);
+       newDocument.put("authors",  new BasicDBObject("$regex",".*"+autore+".*"));
      }
      if(isbn!=null && !isbn.equals(""))
      {
@@ -261,7 +261,7 @@ public class LibroBeanDao {
      }
      if(casa_editrice!=null && !casa_editrice.equals(""))
      {
-       newDocument.put("publisher;;;", casa_editrice);
+       newDocument.put("publisher;;;",  new BasicDBObject("$regex",".*"+casa_editrice+".*"));
      } 
      
      FindIterable<Document> iterDoc= collection.find(Filters.and(newDocument));

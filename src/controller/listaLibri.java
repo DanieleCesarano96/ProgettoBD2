@@ -27,7 +27,7 @@ public class listaLibri extends HttpServlet {
 	  ArrayList<LibroBean> libri= libriDao.getAllBooks();
 	  
 	  request.setAttribute("libri",libri);
-	  request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+	  request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
