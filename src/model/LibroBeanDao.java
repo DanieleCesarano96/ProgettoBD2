@@ -80,9 +80,9 @@ public class LibroBeanDao {
     }
   }
   
-  public synchronized ArrayList<LibroBean> getAllBooks() {
+  public synchronized LibroBean getLibro(Object id) {
     ConnectToDB mongo = new ConnectToDB();
-    ArrayList<LibroBean> libri= new ArrayList<LibroBean>();
+    LibroBean libro = null;
     
     if(mongo.Connessione())
     {
@@ -90,10 +90,10 @@ public class LibroBeanDao {
      
      MongoCollection<Document> collection= database.getCollection("Books");
      
-     FindIterable<Document> iterDoc= collection.find();
+     FindIterable<Document> iterDoc= collection.find(Filters.eq("_id", id));
      MongoCursor<Document> it = iterDoc.iterator();
      
-     while(it.hasNext())
+     if(it.hasNext())
      {
        Document document = it.next();
        
@@ -141,40 +141,9 @@ public class LibroBeanDao {
          num_rev=  document.getInteger("text_reviews_count");
        }
        
-       LibroBean libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
+        libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
            valutazione_media,document.getString("isbn"),document.getString("isbn13"),document.getString("language_code"),
            num_pag,num_val,num_rev,document.getString("publication_date"),document.getString("publisher;;;"));
-       libri.add(libro);
-     }
-     return libri;
-    } 
-    else
-    {
-      return null;
-    }
-  }
-  
-  public synchronized LibroBean getLibro(Object id) {
-    ConnectToDB mongo = new ConnectToDB();
-    LibroBean libro = null;
-    
-    if(mongo.Connessione())
-    {
-     MongoDatabase database = mongo.getDatabase();
-     
-     MongoCollection<Document> collection= database.getCollection("Books");
-     
-     FindIterable<Document> iterDoc= collection.find(Filters.eq("_id", id));
-     MongoCursor<Document> it = iterDoc.iterator();
-     
-     if(it.hasNext())
-     {
-       Document document = it.next();
-
-        libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
-           document.getDouble("average_rating"),document.getString("isbn"),document.getString("isbn13"),
-           document.getString("language_code"),document.getInteger("num_pages"),document.getInteger("ratings_count"),
-           document.getInteger("text_reviews_count"),document.getString("publication_date"),document.getString("publisher;;;"));
      }
     } 
     return libro;
@@ -190,16 +159,48 @@ public class LibroBeanDao {
      
      BasicDBObject newDocument = new BasicDBObject();
      newDocument.put("title", libro.getTitolo());
-     newDocument.put("authors", libro.getAutore());
-     newDocument.put("average_rating", libro.getValutazione_media());
-     newDocument.put("isbn", libro.getIsbn());
-     newDocument.put("isbn13", libro.getIsbn13());
-     newDocument.put("language_code", libro.getLingua());
-     newDocument.put("num_pages", libro.getNumero_pagine());
-     newDocument.put("ratings_count", libro.getNumero_valutazioni());
-     newDocument.put("text_reviews_count", libro.getNumero_revisioni());
-     newDocument.put("publication_date", libro.getData_publicazione());
-     newDocument.put("publisher;;;", libro.getCasa_editrice());
+     
+     if(!libro.getAutore().equals(""))
+     {
+       newDocument.put("authors", libro.getAutore());
+     }
+     if(libro.getValutazione_media()!=-1)
+     {
+       newDocument.put("average_rating", libro.getValutazione_media());
+     }
+     if(!libro.getIsbn().equals(""))
+     {
+       newDocument.put("isbn", libro.getIsbn());
+     }
+     if(!libro.getIsbn13().equals(""))
+     {
+       newDocument.put("isbn13", libro.getIsbn13());
+     }
+     if(!libro.getLingua().equals(""))
+     {
+       newDocument.put("language_code", libro.getLingua());
+     }
+     if(!libro.getData_publicazione().equals(""))
+     {
+       newDocument.put("publication_date", libro.getData_publicazione());
+     }
+     if(!libro.getCasa_editrice().equals(""))
+     {
+       newDocument.put("publisher;;;", libro.getCasa_editrice());
+     }
+    
+     if(libro.getNumero_pagine()!=-1)
+     {
+       newDocument.put("num_pages", libro.getNumero_pagine());
+     }
+     if(libro.getNumero_valutazioni()!=-1)
+     {
+       newDocument.put("ratings_count", libro.getNumero_valutazioni());
+     }
+     if(libro.getNumero_revisioni()!=-1)
+     {
+       newDocument.put("text_reviews_count", libro.getNumero_revisioni());
+     }
      
      BasicDBObject updateObject = new BasicDBObject();
      updateObject.put("$set", newDocument);
@@ -231,7 +232,8 @@ public class LibroBeanDao {
     }
   }
 
-  public synchronized ArrayList<LibroBean> ricercaAvanzata(String titolo, String autore, String isbn, String lingua,String casa_editrice) {
+  public synchronized ArrayList<LibroBean> ricercaAvanzata(String titolo, String autore, String isbn, String lingua,
+      String casa_editrice,double min_valutazione,double max_valutazione) {
     ConnectToDB mongo = new ConnectToDB();
     ArrayList<LibroBean> libri= new ArrayList<LibroBean>();
     
@@ -262,6 +264,11 @@ public class LibroBeanDao {
      if(casa_editrice!=null && !casa_editrice.equals(""))
      {
        newDocument.put("publisher;;;",  new BasicDBObject("$regex",".*"+casa_editrice+".*"));
+     } 
+     if(min_valutazione!=0 || max_valutazione!=5)
+     {
+       BasicDBObject media= new BasicDBObject("$lt",max_valutazione).append("$gt",min_valutazione);
+       newDocument.put("average_rating",media);
      } 
      
      FindIterable<Document> iterDoc= collection.find(Filters.and(newDocument));

@@ -27,6 +27,8 @@ public class ricercaAvanzata extends HttpServlet {
 	  String isbn= request.getParameter("isbn");
 	  String lingua= request.getParameter("lingua");
 	  String casa_editrice= request.getParameter("casaeditrice");
+      double min_valutazione = Double.parseDouble(request.getParameter("minvalutazionemedia"));
+      double max_valutazione = Double.parseDouble(request.getParameter("maxvalutazionemedia"));
       
       LibroBeanDao libroDao= new LibroBeanDao();
       
@@ -38,7 +40,7 @@ public class ricercaAvanzata extends HttpServlet {
       }
       else 
       {
-        ArrayList<LibroBean> libri =libroDao.ricercaAvanzata(titolo,autore,isbn,lingua,casa_editrice);    
+        ArrayList<LibroBean> libri =libroDao.ricercaAvanzata(titolo,autore,isbn,lingua,casa_editrice,min_valutazione,max_valutazione);    
         
         request.setAttribute("libri",libri);
         request.getRequestDispatcher("index.jsp").forward(request, response);

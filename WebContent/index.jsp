@@ -88,15 +88,20 @@
 										 	type="text" placeholder="isbn"
 											aria-label="isbn">
 									</div>
-									<div  class="text-xs-center mb-1">Lingua
-										<input  name="lingua" 
-										 	type="text" placeholder="Lingua"
-											aria-label="Lingua">
-									</div>
 									<div  class="text-xs-center mb-1">Casa Editrice
 										<input  name="casaeditrice" 
 										 	type="text" placeholder="Casa Editrice"
 											aria-label="Casa Editrice">
+									</div>
+									<div  class="text-xs-center mb-1">Valutazione Media Min
+									<input  name="minvalutazionemedia" 
+										 	type="number" min="0" max="4" placeholder="Valutazione Media Min"
+											aria-label="Valutazione Media Min" value="0">
+									</div>
+									<div  class="text-xs-center mb-1">Valutazione Media Max
+									<input  name="maxvalutazionemedia" 
+										 	type="number" min="1" max="5" placeholder="Valutazione Media Max"
+											aria-label="Valutazione Media Max" value="5">
 									</div>
 									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
 								</form>	

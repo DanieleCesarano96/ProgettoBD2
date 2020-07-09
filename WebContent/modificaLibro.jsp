@@ -22,26 +22,15 @@
 <body>
 	<jsp:include page="header.jsp" />
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-		crossorigin="anonymous"></script>
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/registrazione.js"></script>
-
-
 
 	
 	<div
 		style="background-image: linear-gradient(to bottom right, #FF8C00, #FFC04C); min-height: 80vh;">
 		<% 
-				LibroBean libro= (LibroBean) request.getAttribute("libro");	
+				LibroBean libro= (LibroBean) request.getAttribute("libro");		
 		%>
 
 		<main role="main" class="container">
@@ -67,63 +56,141 @@
 							<div class="form-group">
 								<label for="inputAutore">Autore</label> <input type="text"
 									class="form-control" name="autore" placeholder="Autore"
-									onchange="controlloAutore()" value="<%=libro.getAutore() %>"
-									required>
+									onchange="controlloAutore()" 
+									<% 
+											if(libro.getAutore()!=null)
+											{	
+									%>
+											value="<%=libro.getAutore()  %>"> 
+									<% 
+											}
+									%>
 							</div>
 
 							<div class="form-group">
 								<label for="inputValutazioneMedia">Valutazione media</label> <input  
 								class="form-control" name="valutazioneMedia" placeholder="Valutazione Media"
 									onchange="controlloValutazioneMedia()"
-									value="<%=libro.getValutazione_media() %>"> 
+									<% 
+											if(libro.getValutazione_media()!=-1)
+											{	
+									%>
+											value="<%=libro.getValutazione_media() %>"> 
+									<% 
+											}
+									%>
 							</div>
 
 							<div class="form-group">
 								<label for="inputIsbn">Isbn</label>
 								<input class="form-control" type="number"  placeholder="Isbn" name="isbn" 
-								onchange="controlloIsbn()" value="<%=libro.getIsbn() %>">
+								onchange="controlloIsbn()"
+									<% 
+											if(libro.getIsbn()!=null)
+											{	
+									%>
+											value="<%=libro.getIsbn() %>"> 
+									<% 
+											}
+									%>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputIsbn13">Isbn13</label>
 								<input class="form-control" type="number"  placeholder="Isbn13" name="isbn13" 
-								onchange="controlloIsbn13()" value="<%=libro.getIsbn13() %>">
+								onchange="controlloIsbn13()" 
+									<% 
+											if(libro.getIsbn13()!=null)
+											{	
+									%>
+											value="<%=libro.getIsbn13() %>"> 
+									<% 
+											}
+									%>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputLingua">Lingua</label>
 								<input class="form-control" type="text"  placeholder="Lingua" name="lingua" 
-								onchange="controlloLingua()" value="<%=libro.getLingua() %>">
+								onchange="controlloLingua()"
+									<% 
+											if(libro.getLingua()!=null)
+											{	
+									%>
+											value="<%=libro.getLingua() %>"> 
+									<% 
+											}
+									%>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroPagine">Numero pagine</label>
 								<input class="form-control" type="number"
-								placeholder="Numero pagine" name="numeropagine" value="<%=libro.getNumero_pagine() %>">
+								placeholder="Numero pagine" name="numeropagine"
+									<% 
+											if(libro.getNumero_pagine()!=-1)
+											{	
+									%>
+											value="<%=libro.getNumero_pagine() %>"> 
+									<% 
+											}
+									%>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroValutazioni">Numero valutazioni</label>
 								<input class="form-control" type="number"
-								placeholder="Numero valutazioni" name="numerovalutazioni" value="<%=libro.getNumero_valutazioni() %>">
+								placeholder="Numero valutazioni" name="numerovalutazioni" 
+									<% 
+											if(libro.getNumero_valutazioni()!=-1)
+											{	
+									%>
+											value="<%=libro.getNumero_valutazioni() %>"> 
+									<% 
+											}
+									%>
 							</div>
 							
 							<div class="form-group">
 								<label for="inputNumeroRevisioni">Numero revisioni</label>
 								<input class="form-control" type="number"
-								placeholder="Numero revisioni" name="numerorevisioni" value="<%=libro.getNumero_revisioni() %>">
+								placeholder="Numero revisioni" name="numerorevisioni" 
+									<% 
+											if(libro.getNumero_revisioni()!=-1)
+											{	
+									%>
+											value="<%=libro.getNumero_revisioni() %>"> 
+									<% 
+											}
+									%>
 							</div>
 						
 							<div class="form-group">
 								<label for="inputDatapublicazione">Data publicazione</label>
 								<input class="form-control" type="text"
-								placeholder="Data publicazione" name="dataPublicazione" value="<%=libro.getData_publicazione()%>">
+								placeholder="Data publicazione" name="dataPublicazione"
+									<% 
+											if(libro.getData_publicazione()!=null)
+											{	
+									%>
+											value="<%=libro.getData_publicazione() %>"> 
+									<% 
+											}
+									%> 
 							</div>
 							
 							<div class="form-group">
 								<label for="inputCasaeditrice">Casa editrice</label>
 								<input class="form-control" type="text"
-								placeholder="Casa editrice" name="casaEditrice" value="<%=libro.getCasa_editrice()%>">
+								placeholder="Casa editrice" name="casaEditrice" 
+									<% 
+											if(libro.getCasa_editrice()!=null)
+											{	
+									%>
+											value="<%=libro.getCasa_editrice() %>"> 
+									<% 
+											}
+									%>
 							</div>
 
 							<button type="submit" class="btn btn-primary mx-3 my-3" >Modifica</button>

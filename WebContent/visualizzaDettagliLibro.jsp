@@ -26,7 +26,6 @@
 
 		<% 
 				LibroBean libro= (LibroBean) request.getAttribute("libro");	
-				System.out.println(libro.getTitolo());
 		%>
 		
 		<div class="row">
@@ -72,7 +71,14 @@
 													<label>Autore:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getAutore() %></p>
+												<% 
+														if(libro.getAutore()!=null)
+														{	
+												%>
+														<p><%=libro.getAutore() %></p> 
+												<% 
+														}
+												%>
 												</div>
 											</div>
 
@@ -81,7 +87,14 @@
 													<label>Valutazione media:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getValutazione_media() %></p>
+												<% 
+														if(libro.getValutazione_media()!=-1)
+														{	
+												%>
+														<p><%=libro.getValutazione_media() %></p>
+												<% 
+														}
+												%>
 												</div>
 											</div>
 
@@ -90,7 +103,15 @@
 													<label>Isbn:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getIsbn() %></p>
+															
+												<% 
+														if(libro.getIsbn()!=null)
+														{	
+												%>	
+														<p><%=libro.getIsbn() %></p> 
+												<% 
+														}
+												%>
 												</div>
 											</div>
 											
@@ -99,7 +120,14 @@
 													<label>Isbn13:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getIsbn13() %></p>
+													<% 
+															if(libro.getIsbn13()!=null)
+															{	
+													%>	
+															<p><%=libro.getIsbn13() %></p> 
+													<% 
+															}
+													%>
 												</div>
 											</div>
 											
@@ -108,7 +136,14 @@
 													<label>Lingua:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getLingua() %></p>
+													<% 
+															if(libro.getLingua()!=null)
+															{	
+													%>	
+															<p><%=libro.getLingua() %></p> 
+													<% 
+															}
+													%>
 												</div>
 											</div>
 											
@@ -117,7 +152,14 @@
 													<label>Numero pagine:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getNumero_pagine() %></p>
+													<% 
+															if(libro.getNumero_pagine()!=-1)
+															{	
+													%>
+															<p><%=libro.getNumero_pagine() %></p>
+													<% 
+															}
+													%>
 												</div>
 											</div>
 											
@@ -126,7 +168,14 @@
 													<label>Numero valutazioni:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getNumero_valutazioni() %></p>
+													<% 
+															if(libro.getNumero_valutazioni()!=-1)
+															{	
+													%>
+															<p><%=libro.getNumero_valutazioni() %></p>
+													<% 
+															}
+													%>
 												</div>
 											</div>
 	
@@ -135,7 +184,14 @@
 													<label>Numero revisioni:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getNumero_revisioni() %></p>
+												<% 
+														if(libro.getNumero_revisioni()!=-1)
+														{	
+												%>
+														<p><%=libro.getNumero_revisioni() %></p>
+												<% 
+														}
+												%>
 												</div>
 											</div>
 	
@@ -144,7 +200,14 @@
 													<label>Data publicazione:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getData_publicazione()%></p>
+												<% 
+														if(libro.getData_publicazione()!=null)
+														{	
+												%>
+														<p><%=libro.getData_publicazione()%></p>
+												<% 
+														}
+												%> 
 												</div>
 											</div>
 	
@@ -153,7 +216,14 @@
 													<label>Casa editrice:</label>
 												</div>
 												<div class="col-md-6">
-													<p><%=libro.getCasa_editrice()%></p>
+													<% 
+															if(libro.getCasa_editrice()!=null)
+															{	
+													%>
+																<p><%=libro.getCasa_editrice()%></p>
+													<% 
+															}
+													%>
 												</div>
 											</div>
 
