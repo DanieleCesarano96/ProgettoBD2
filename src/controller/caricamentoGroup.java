@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.LibroBeanDao;
 
-@WebServlet("/conteggioLibri")
-public class conteggioLibri extends HttpServlet {
+@WebServlet("/caricamentoGroup")
+public class caricamentoGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public conteggioLibri() {
+    public caricamentoGroup() {
         super();
     }
 
@@ -22,17 +22,8 @@ public class conteggioLibri extends HttpServlet {
       ArrayList<String> autori=libroDao.groupByAuthors();
       ArrayList<String> case_editrici=libroDao.groupByCasaEditrice();
       
-      String autore= request.getParameter("autori");
-      String casa_editrice= request.getParameter("case_editrici");
-    
-      String num_lib=libroDao.CountLibri(autore, casa_editrice)+"";
-      
       request.setAttribute("autori",autori);
       request.setAttribute("case_editrici",case_editrici);
-      request.setAttribute("num_lib",num_lib);
-      request.setAttribute("autore",autore);
-      request.setAttribute("casa_editrice",casa_editrice);
-      
       
       request.getRequestDispatcher("queryAnalitiche.jsp").forward(request, response);  
 	}

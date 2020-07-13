@@ -119,7 +119,7 @@
 						<tr class="border" style="word-wrap: break-word;">
 							<td
 								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
-								<form action="queryAnalitiche" method="post">
+								<form action="caricamentoGroup" method="post">
 									
 									<button type="submit" class="btn btn-primary mb-2"> Vai alle Query Analitiche</button>
 								</form>	

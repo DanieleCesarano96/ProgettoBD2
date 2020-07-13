@@ -33,12 +33,12 @@
 				<div class="card mb-3 px-3 py-3">
 					
 				<h4 class="font-italic pt-3 pl-3 pr-3 pb-1">Query analitiche</h4>
-				<h6>Numero libri publicati da un determinato autore o/e casa editrice.</h6>
+				
 					<table class="table" style="table-layout: fixed; width: 100%;">
 						<tr class="border" style="word-wrap: break-word;">
 							<td
 								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
-								<form action="conteggioLibri" method="post">
+								<form action="queryAnalitiche" method="post">
 									
 									<label for="autori">Scegli un autore:</label>
 										<select name="autori" id="autori">
@@ -69,100 +69,19 @@
 												
 										%>
 										</select>
+									<h6>Numero libri publicati da un determinato autore o/e casa editrice.</h6>
+									<button name="button1" type="submit" class="btn btn-primary mb-2"> Cerca</button>
 									
-									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
+									<h6>Rate max e min per un autore o casa editrice.</h6>
+									<button name="button2" type="submit" class="btn btn-primary mb-2"> Cerca</button>
+									
+									<h6>Media del rate medio di ogni libro per un determinato autore o/e casa editrice.</h6>
+									<button name="button3" type="submit" class="btn btn-primary mb-2"> Cerca</button>
 								</form>	
 							</td>
 						</tr>
-
-					</table>
-					<h6>Rate max e min per un autore o casa editrice.</h6>
-					<table class="table" style="table-layout: fixed; width: 100%;">
-						<tr class="border" style="word-wrap: break-word;">
-							<td
-								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
-								<form action="rateMaxMin" method="post">
-									
-									<label for="autori4">Scegli un autore:</label>
-										<select name="autori4" id="autori4">
-										<option value=""></option>
-										<%
-										for(String autore:autori)
-										{
-											
-										%>
-										  <option value="<%=autore%>"><%=autore%></option>
-										<%
-										}
-												
-										%>
-										</select>
-										
-									<label for="case_editrici4">Scegli una casa editrice:</label>
-										<select  name="case_editrici4" id="case_editrici4">
-										<option value=""></option>
-										<%
-										for(String casa_editrice:case_editrici)
-										{
-											
-										%>
-										  <option value="<%=casa_editrice%>"><%=casa_editrice%></option>
-										<%
-											}
-												
-										%>
-										</select>
-									
-									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
-								</form>	
-							</td>
-						</tr>
-
 					</table>
 					
-					<h6>Media del rate medio di ogni libro per un determinato autore o/e casa editrice.</h6>
-					<table class="table" style="table-layout: fixed; width: 100%;">
-						<tr class="border" style="word-wrap: break-word;">
-							<td
-								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
-								<form action="mediaRate" method="post">
-									
-									<label for="autori2">Scegli un autore:</label>
-										<select name="autori2" id="autori2">
-										<option value=""></option>
-										<%
-										for(String autore:autori)
-										{
-											
-										%>
-										  <option value="<%=autore%>"><%=autore%></option>
-										<%
-										}
-												
-										%>
-										</select>
-										
-									<label for="case_editrici2">Scegli una casa editrice:</label>
-										<select  name="case_editrici2" id="case_editrici2">
-										<option value=""></option>
-										<%
-										for(String casa_editrice:case_editrici)
-										{
-											
-										%>
-										  <option value="<%=casa_editrice%>"><%=casa_editrice%></option>
-										<%
-											}
-												
-										%>
-										</select>
-									
-									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
-								</form>	
-							</td>
-						</tr>
-
-					</table>
 					
 					<h6>Numero libri publicati da una determinata casa editrice in un anno.</h6>
 					<table class="table" style="table-layout: fixed; width: 100%;">
