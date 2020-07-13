@@ -1,20 +1,24 @@
 package model;
 
-import java.util.ArrayList;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-import com.mongodb.*;
 import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Aggregates.*;
-import edu.emory.mathcs.backport.java.util.Arrays;
+import com.mongodb.client.model.Projections;
+
 import mongodb.ConnectToDB;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 public class LibroBeanDao {
 
@@ -339,85 +343,105 @@ public class LibroBeanDao {
     }    
   }
   
-  public synchronized ArrayList<LibroBean> ricercaAvanzata2(String autore, String casa_editrice) {
+  public synchronized ArrayList<String> groupByAuthors() {
     
     ConnectToDB mongo = new ConnectToDB();
-    ArrayList<LibroBean> libri= new ArrayList<LibroBean>();
     
     if(mongo.Connessione())
     {
      MongoDatabase database = mongo.getDatabase();
-     
      MongoCollection<Document> collection= database.getCollection("Books");
-    
-     Bson project= project();
-     Bson group= group("$authors");
-     ArrayList<Bson> lista= new ArrayList<Bson>();
-     lista.add(group);
      
-     AggregateIterable<Document> iterDoc=   collection.aggregate(lista);
-    
+     AggregateIterable<Document> iterDoc= collection.aggregate(
+         Arrays.asList(
+             Aggregates.project(Projections.include("authors")),
+             Aggregates.group("$authors")
+             )
+         );
+     
      MongoCursor<Document> it = iterDoc.iterator();
-     
+     ArrayList<String> autori= new ArrayList<String>();
      while(it.hasNext())
      {
        Document document = it.next();
+       autori.add(document.getString("_id"));
        
-       double valutazione_media;
-       
-       if(document.getDouble("average_rating")==null)
-       {
-         valutazione_media=-1;
-       }
-       else
-       {
-         valutazione_media=  document.getDouble("average_rating");
-       }
-       
-       int num_pag;
-          
-       if(document.getInteger("num_pages")==null)
-       {
-         num_pag=-1;
-       }
-       else
-       {
-         num_pag=  document.getInteger("num_pages");
-       }
-       
-       int num_val;
-       
-       if(document.getInteger("ratings_count")==null)
-       {
-         num_val=-1;
-       }
-       else
-       {
-         num_val=  document.getInteger("ratings_count");
-       }
-       
-       int num_rev;
-       
-       if(document.getInteger("text_reviews_count")==null)
-       {
-         num_rev=-1;
-       }
-       else
-       {
-         num_rev=  document.getInteger("text_reviews_count");
-       }
-       
-       LibroBean libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
-           valutazione_media,document.getString("isbn"),document.getString("isbn13"),document.getString("language_code"),
-           num_pag,num_val,num_rev,document.getString("publication_date"),document.getString("publisher;;;"));
-       libri.add(libro);
      }
-     return libri;
-    } 
-    else
+     return autori;
+    }
+    else 
     {
       return null;
-    }    
+    }
+  }
+  
+  
+  public synchronized ArrayList<String> groupByCasaEditrice() {
+    
+    ConnectToDB mongo = new ConnectToDB();
+    
+    if(mongo.Connessione())
+    {
+     MongoDatabase database = mongo.getDatabase();
+     MongoCollection<Document> collection= database.getCollection("Books");
+     
+     AggregateIterable<Document> iterDoc= collection.aggregate(
+         Arrays.asList(
+             Aggregates.project(Projections.include("publisher;;;")),
+             Aggregates.group("$publisher;;;")
+             )
+         );
+     
+     MongoCursor<Document> it = iterDoc.iterator();
+     ArrayList<String> case_editrici= new ArrayList<String>();
+     while(it.hasNext())
+     {
+       Document document = it.next();
+       case_editrici.add(document.getString("_id"));
+       
+     }
+     return case_editrici;
+    }
+    else 
+    {
+      return null;
+    }
+  }
+  
+public synchronized ArrayList<String> MaxMinAvg(String autore, String casa_editrice) {
+    
+    ConnectToDB mongo = new ConnectToDB();
+    
+    if(mongo.Connessione())
+    {
+     MongoDatabase database = mongo.getDatabase();
+     MongoCollection<Document> collection= database.getCollection("Books");
+
+     AggregateIterable<Document> iterDoc= collection.aggregate(
+         Arrays.asList(    
+             
+             Aggregates.match(Filters.eq("authors",autore)),
+             Aggregates.group("$authors", Accumulators.max("max","$average_rating")),
+             Aggregates.project(Projections.include("_id","title","authors","average_rating"))
+           
+             )
+         );
+     
+     MongoCursor<Document> it = iterDoc.iterator();
+     
+     ArrayList<String> autori= new ArrayList<String>();
+     while(it.hasNext())
+     {
+       Document document = it.next();
+       autori.add(document.getString("_id"));
+       System.out.println(document);
+     }
+     return autori;
+    }
+    else 
+    {
+      return null;
+    }
   }
   
 }
