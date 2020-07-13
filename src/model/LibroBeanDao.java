@@ -486,33 +486,73 @@ public class LibroBeanDao {
     }
   }
   
-public synchronized ArrayList<String> MaxMinAvg(String autore, String casa_editrice) {
+public synchronized ArrayList<Double> MaxMinAvg(String autore, String casa_editrice) {
     
     ConnectToDB mongo = new ConnectToDB();
+    ArrayList<Double> maxmin= new ArrayList<Double>();
+    AggregateIterable<Document> iterDoc= null;
+    AggregateIterable<Document> iterDoc2= null;
     
     if(mongo.Connessione())
     {
      MongoDatabase database = mongo.getDatabase();
-     MongoCollection<Document> collection= database.getCollection("Books");
-
-     AggregateIterable<Document> iterDoc= collection.aggregate(
-         Arrays.asList(    
-             Aggregates.project(Projections.include("_id","title","authors","average_rating")),
-             Aggregates.match(Filters.eq("authors",autore)),
-             Aggregates.group("$authors", Accumulators.max("max","$average_rating"))
-             )
-         );
+     MongoCollection<Document> collection= database.getCollection("Books");  
      
-     MongoCursor<Document> it = iterDoc.iterator();
-     
-     ArrayList<String> autori= new ArrayList<String>();
-     while(it.hasNext())
+     if(!autore.equals("") && autore!=null && !casa_editrice.equals("") && casa_editrice!=null)
      {
-       Document document = it.next();
-       autori.add(document.getString("_id"));
-       System.out.println(document);
+         return null;
      }
-     return autori;
+     else if(!autore.equals("") && autore!=null)
+     {
+       iterDoc= collection.aggregate(
+           Arrays.asList(    
+               Aggregates.match(Filters.eq("authors",autore)),
+               Aggregates.group("$authors", Accumulators.max("max","$average_rating"))
+               )
+           );
+       
+       iterDoc2= collection.aggregate(
+           Arrays.asList(    
+               Aggregates.match(Filters.eq("authors",autore)),
+               Aggregates.group("$authors", Accumulators.min("min","$average_rating"))
+               )
+           );
+     }
+     else 
+     {
+       iterDoc= collection.aggregate(
+           Arrays.asList(    
+               Aggregates.match(Filters.eq("publisher;;;",casa_editrice)),
+               Aggregates.group("$publisher;;;", Accumulators.max("max","$average_rating"))
+               )
+           );
+       
+       iterDoc2= collection.aggregate(
+           Arrays.asList(    
+               Aggregates.match(Filters.eq("publisher;;;",casa_editrice)),
+               Aggregates.group("$publisher;;;", Accumulators.min("min","$average_rating"))
+               )
+           );
+     }
+     
+     MongoCursor<Document> it = iterDoc.iterator(); 
+     MongoCursor<Document> it2 = iterDoc2.iterator(); 
+     
+     if(it.hasNext())
+     {
+     Document document = it.next();
+     Document document2 = it2.next();
+     maxmin.add(document.getDouble("max"));
+     maxmin.add(document2.getDouble("min"));
+     
+     
+     return maxmin;
+     }
+     else
+     {
+       return null;
+     }
+    
     }
     else 
     {

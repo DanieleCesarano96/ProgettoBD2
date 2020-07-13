@@ -20,7 +20,8 @@
 						String num_lib= (String)request.getAttribute("num_lib");
 						String media_rate= (String)request.getAttribute("media_rate");
 						String num_libri_anno= (String)request.getAttribute("num_libri_anno");
-						System.out.println(num_libri_anno+"  "+casa_ed);
+						String rate_max= (String)request.getAttribute("rate_max");
+						String rate_min= (String)request.getAttribute("rate_min");
 	%>
 					
 	<div
@@ -56,6 +57,49 @@
 										
 									<label for="case_editrici">Scegli una casa editrice:</label>
 										<select  name="case_editrici" id="case_editrici">
+										<option value=""></option>
+										<%
+										for(String casa_editrice:case_editrici)
+										{
+											
+										%>
+										  <option value="<%=casa_editrice%>"><%=casa_editrice%></option>
+										<%
+											}
+												
+										%>
+										</select>
+									
+									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
+								</form>	
+							</td>
+						</tr>
+
+					</table>
+					<h6>Rate max e min per un autore o casa editrice.</h6>
+					<table class="table" style="table-layout: fixed; width: 100%;">
+						<tr class="border" style="word-wrap: break-word;">
+							<td
+								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
+								<form action="rateMaxMin" method="post">
+									
+									<label for="autori4">Scegli un autore:</label>
+										<select name="autori4" id="autori4">
+										<option value=""></option>
+										<%
+										for(String autore:autori)
+										{
+											
+										%>
+										  <option value="<%=autore%>"><%=autore%></option>
+										<%
+										}
+												
+										%>
+										</select>
+										
+									<label for="case_editrici4">Scegli una casa editrice:</label>
+										<select  name="case_editrici4" id="case_editrici4">
 										<option value=""></option>
 										<%
 										for(String casa_editrice:case_editrici)
@@ -156,10 +200,7 @@
 				<div class="list-group p-1 card">
 				
 						<h5 class="card-title mb-1">Risultati&nbsp;</h5>
-						<%
-							if(casa_ed!=""&& casa_ed!=null)
-							{	
-						%>
+					
 						<%
 							if(aut!=null)
 							{
@@ -174,6 +215,8 @@
 						</div>
 						<%
 							}
+							if(casa_ed!=null)
+							{
 						%>
 						<div class="row">
 							<div class="col-md-6">
@@ -184,6 +227,33 @@
 							</div>
 						</div>
 						<%
+							}
+							if(rate_max!=null)
+							{
+						%>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Rate max: </label>
+							</div>
+							<div class="col-md-6">
+								<p><%=rate_max%></p>
+							</div>
+						</div>
+						<%
+							}
+							if(rate_min!=null)
+							{
+						%>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Rate min: </label>
+							</div>
+							<div class="col-md-6">
+								<p><%=rate_min%></p>
+							</div>
+						</div>
+						<%
+							}
 							if(media_rate!=null)
 							{
 						%>
@@ -225,7 +295,7 @@
 						</div>
 						<%
 							}
-						}
+						
 						%>
 				
 				</div>
