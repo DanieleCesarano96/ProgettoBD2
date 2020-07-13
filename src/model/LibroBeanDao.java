@@ -11,6 +11,7 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
 
 import mongodb.ConnectToDB;
 
@@ -22,6 +23,81 @@ import org.bson.types.ObjectId;
 
 public class LibroBeanDao {
 
+  public synchronized ArrayList<LibroBean> getAllBooks() {
+    ConnectToDB mongo = new ConnectToDB();
+    ArrayList<LibroBean> libri= new ArrayList<LibroBean>();
+    
+    if(mongo.Connessione())
+    {
+     MongoDatabase database = mongo.getDatabase();
+     
+     MongoCollection<Document> collection= database.getCollection("Books");
+     
+     FindIterable<Document> iterDoc= collection.find();
+     MongoCursor<Document> it = iterDoc.iterator();
+     
+     while(it.hasNext())
+     {
+       Document document = it.next();
+       
+       double valutazione_media;
+       
+       if(document.getDouble("average_rating")==null)
+       {
+         valutazione_media=-1;
+       }
+       else
+       {
+         valutazione_media=  document.getDouble("average_rating");
+       }
+       
+       int num_pag;
+          
+       if(document.getInteger("num_pages")==null)
+       {
+         num_pag=-1;
+       }
+       else
+       {
+         num_pag=  document.getInteger("num_pages");
+       }
+       
+       int num_val;
+       
+       if(document.getInteger("ratings_count")==null)
+       {
+         num_val=-1;
+       }
+       else
+       {
+         num_val=  document.getInteger("ratings_count");
+       }
+       
+       int num_rev;
+       
+       if(document.getInteger("text_reviews_count")==null)
+       {
+         num_rev=-1;
+       }
+       else
+       {
+         num_rev=  document.getInteger("text_reviews_count");
+       }
+       
+       LibroBean libro= new LibroBean(document.getString("_id"),document.getString("title"),document.getString("authors"),
+           valutazione_media,document.getString("isbn"),document.getString("isbn13"),document.getString("language_code"),
+           num_pag,num_val,num_rev,document.getString("publication_date"),document.getString("publisher;;;"));
+       libri.add(libro);
+     }
+     return libri;
+    } 
+    else
+    {
+      return null;
+    }
+  }
+  
+  
   public synchronized boolean aggiungiLibro(LibroBean libro) {
     ConnectToDB mongo = new ConnectToDB();
     
@@ -355,7 +431,8 @@ public class LibroBeanDao {
      AggregateIterable<Document> iterDoc= collection.aggregate(
          Arrays.asList(
              Aggregates.project(Projections.include("authors")),
-             Aggregates.group("$authors")
+             Aggregates.group("$authors"),
+             Aggregates.sort(Sorts.ascending("_id"))
              )
          );
      
@@ -388,7 +465,8 @@ public class LibroBeanDao {
      AggregateIterable<Document> iterDoc= collection.aggregate(
          Arrays.asList(
              Aggregates.project(Projections.include("publisher;;;")),
-             Aggregates.group("$publisher;;;")
+             Aggregates.group("$publisher;;;"),
+             Aggregates.sort(Sorts.ascending("_id"))
              )
          );
      
@@ -419,11 +497,9 @@ public synchronized ArrayList<String> MaxMinAvg(String autore, String casa_editr
 
      AggregateIterable<Document> iterDoc= collection.aggregate(
          Arrays.asList(    
-             
+             Aggregates.project(Projections.include("_id","title","authors","average_rating")),
              Aggregates.match(Filters.eq("authors",autore)),
-             Aggregates.group("$authors", Accumulators.max("max","$average_rating")),
-             Aggregates.project(Projections.include("_id","title","authors","average_rating"))
-           
+             Aggregates.group("$authors", Accumulators.max("max","$average_rating"))
              )
          );
      
@@ -443,5 +519,163 @@ public synchronized ArrayList<String> MaxMinAvg(String autore, String casa_editr
       return null;
     }
   }
+
+public synchronized int CountLibri(String autore, String casa_editrice) {
   
+  ConnectToDB mongo = new ConnectToDB();
+  
+  if(mongo.Connessione())
+  {
+   MongoDatabase database = mongo.getDatabase();
+   MongoCollection<Document> collection= database.getCollection("Books");
+   AggregateIterable<Document> iterDoc;
+   
+   if((!autore.equals("") && autore!=null)  && (casa_editrice!=null && !casa_editrice.equals("")))
+   {
+      iterDoc= collection.aggregate(
+         Arrays.asList(    
+             Aggregates.match(Filters.and(Filters.eq("authors",autore),Filters.eq("publisher;;;",casa_editrice))),
+             Aggregates.group("$authors", Accumulators.sum("count",1))    
+             )
+         );
+   }
+   else if(!autore.equals("") && autore!=null)
+   {
+      iterDoc= collection.aggregate(
+         Arrays.asList(    
+             Aggregates.match(Filters.eq("authors",autore)),
+             Aggregates.group("$authors", Accumulators.sum("count",1))
+             )
+         );
+   }
+   else
+   {
+      iterDoc= collection.aggregate(
+         Arrays.asList(    
+             Aggregates.match(Filters.eq("publisher;;;",casa_editrice)),
+             Aggregates.group("$publisher;;;", Accumulators.sum("count",1))
+             )
+         );
+   }
+  
+   MongoCursor<Document> it = iterDoc.iterator();
+   
+   if(it.hasNext())
+   {
+   Document document = it.next();
+
+   return document.getInteger("count");
+   }
+   else
+   {
+     return 0;
+   }
+  }
+  else 
+  {
+    return 0;
+  }
+}
+
+public synchronized double CountMedioLibri(String autore, String casa_editrice) {
+  
+  ConnectToDB mongo = new ConnectToDB();
+  
+  if(mongo.Connessione())
+  {
+   MongoDatabase database = mongo.getDatabase();
+   MongoCollection<Document> collection= database.getCollection("Books");
+   AggregateIterable<Document> iterDoc;
+   
+   if((!autore.equals("") && autore!=null)  && (casa_editrice!=null && !casa_editrice.equals("")))
+   {
+     iterDoc= collection.aggregate(
+         Arrays.asList( 
+             Aggregates.match(Filters.and(Filters.eq("authors",autore),Filters.eq("publisher;;;",casa_editrice))),
+             Aggregates.group("$authors",  Accumulators.avg("avg","$average_rating"))    
+             )
+         );
+  
+   }
+   else if(!autore.equals("") && autore!=null)
+   {
+     iterDoc= collection.aggregate(
+         Arrays.asList(  
+             Aggregates.match(Filters.eq("authors",autore)),
+             Aggregates.group("$authors",  Accumulators.avg("avg","$average_rating"))    
+             )
+         );
+   }
+   else
+   {
+     iterDoc= collection.aggregate(
+         Arrays.asList(  
+             Aggregates.match(Filters.eq("publisher;;;",casa_editrice)),
+             Aggregates.group("$authors",  Accumulators.avg("avg","$average_rating"))    
+             )
+         );
+   }
+  
+   MongoCursor<Document> it = iterDoc.iterator();
+   
+   if(it.hasNext())
+   {
+     Document document = it.next();
+  
+  
+     return document.getDouble("avg");
+   }
+   else
+   {
+     return 0;
+   }
+
+  }
+  else 
+  {
+    return 0;
+  }
+}
+
+
+public synchronized int CountLibriRangeData(String casa_editrice,String anno) {
+  
+  ConnectToDB mongo = new ConnectToDB();
+  
+  if(mongo.Connessione())
+  {
+   MongoDatabase database = mongo.getDatabase();
+   MongoCollection<Document> collection= database.getCollection("Books");
+
+   BasicDBObject newDocument = new BasicDBObject();
+
+   newDocument.put("publication_date", new BasicDBObject("$regex",".*/.*/"+anno));
+
+   AggregateIterable<Document> iterDoc= collection.aggregate(
+         Arrays.asList(    
+             Aggregates.match(Filters.and(newDocument,Filters.eq("publisher;;;",casa_editrice))),
+             Aggregates.group("$publisher;;;", Accumulators.sum("count",1))    
+             )
+         );
+
+  
+   MongoCursor<Document> it = iterDoc.iterator();
+   if(it.hasNext())
+   {
+   Document document = it.next();
+
+   return document.getInteger("count");
+   }
+   else
+   {
+     return 0;
+   }
+  
+  }
+  else 
+  {
+    return 0;
+  }
+}
+
 }

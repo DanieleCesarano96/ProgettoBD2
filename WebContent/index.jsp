@@ -67,7 +67,7 @@
 			
 			<aside class="col-md-4 my-4">
 				<div class="list-group p-1 card">
-					<h4 class="font-italic pt-3 pl-3 pr-3 pb-1">Ricerca avanzata</h4>
+					<h4 class="font-italic pt-3 pl-3 pr-3 pb-1">Query di ricerca</h4>
 					<table class="table" style="table-layout: fixed; width: 100%;">
 						<tr class="border" style="word-wrap: break-word;">
 							<td
@@ -104,6 +104,24 @@
 											aria-label="Valutazione Media Max" value="5">
 									</div>
 									<button type="submit" class="btn btn-primary mb-2"> Cerca</button>
+								</form>	
+							</td>
+						</tr>
+
+					</table>
+				</div>
+
+			</aside>
+			<aside class="col-md-4 my-4">
+				<div class="list-group p-1 card">
+					<h4 class="font-italic pt-3 pl-3 pr-3 pb-1">Query analitiche</h4>
+					<table class="table" style="table-layout: fixed; width: 100%;">
+						<tr class="border" style="word-wrap: break-word;">
+							<td
+								style="font-size: 14px; padding: 5px; margin-right: 2px; word-wrap: break-word;">
+								<form action="queryAnalitiche" method="post">
+									
+									<button type="submit" class="btn btn-primary mb-2"> Vai alle Query Analitiche</button>
 								</form>	
 							</td>
 						</tr>
