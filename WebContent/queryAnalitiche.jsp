@@ -72,11 +72,8 @@
 									<h6>Numero libri publicati da un determinato autore o/e casa editrice.</h6>
 									<button name="button1" type="submit" class="btn btn-primary mb-2"> Cerca</button>
 									
-									<h6>Rate max e min per un autore o casa editrice.</h6>
-									<button name="button2" type="submit" class="btn btn-primary mb-2"> Cerca</button>
-									
 									<h6>Media del rate medio di ogni libro per un determinato autore o/e casa editrice.</h6>
-									<button name="button3" type="submit" class="btn btn-primary mb-2"> Cerca</button>
+									<button name="button2" type="submit" class="btn btn-primary mb-2"> Cerca</button>
 								</form>	
 							</td>
 						</tr>
